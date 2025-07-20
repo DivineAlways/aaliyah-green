@@ -1,0 +1,503 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stellar AI | AI-Powered Development Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary-start: #667eea;
+            --color-primary-end: #764ba2;
+            --color-secondary: #ffffff;
+            --color-text-dark: #1a202c;
+            --color-text-light: #edf2f7;
+            --color-text-medium: #4a5568;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* --- Global Styles & Resets --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-primary-end);
+            background-image: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
+            color: var(--color-text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 24px;
+        }
+        
+        /* --- Animated Fade-In Elements --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--color-text-light);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+        
+        p {
+            color: var(--color-text-medium);
+            margin-bottom: 16px;
+        }
+
+        /* --- Buttons --- */
+        .btn {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary {
+            background-color: var(--color-secondary);
+            color: var(--color-primary-end);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-text-light);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--color-secondary);
+            color: var(--color-primary-end);
+        }
+
+        /* --- Header --- */
+        .main-header {
+            padding: 24px 0;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+        }
+        
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-text-light);
+            text-decoration: none;
+        }
+        
+        .main-nav a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 24px;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+        
+        .main-nav a:hover {
+            opacity: 1;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 200px 0 150px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%);
+            animation: pulse 10s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--color-text-light);
+            opacity: 0.9;
+            max-width: 650px;
+            margin: 24px auto 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        /* --- Content Sections --- */
+        .content-section {
+            background-color: var(--color-text-light);
+            padding: 80px 0;
+            margin-top: -80px;
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* --- Features Section --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            background-image: linear-gradient(135deg, var(--color-primary-start) 0%, var(--color-primary-end) 100%);
+            color: var(--color-secondary);
+        }
+        
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        /* --- Journeys Section --- */
+        #journeys {
+            padding-top: 80px;
+        }
+        
+        .journeys-container {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .journey-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 40px;
+            flex: 1 1 400px;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .journey-card h3 {
+            color: var(--color-primary-end);
+        }
+
+        .journey-card ul {
+            list-style: none;
+            margin: 16px 0 32px;
+            flex-grow: 1;
+        }
+        
+        .journey-card li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 12px;
+        }
+        
+        .journey-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--color-primary-start);
+            font-weight: 700;
+        }
+        
+        .btn-journey {
+            background-color: var(--color-primary-start);
+            color: var(--color-secondary);
+        }
+
+        .btn-journey:hover {
+            background-color: var(--color-primary-end);
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            padding: 60px 0;
+            text-align: center;
+            color: var(--color-text-light);
+            opacity: 0.8;
+        }
+
+        .social-links {
+            margin-bottom: 16px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 12px;
+            color: var(--color-text-light);
+            opacity: 0.7;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        
+        .social-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .social-links svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none; /* Simple hiding for mobile, a real app would use a hamburger menu */
+            }
+            .hero {
+                padding: 150px 0 100px;
+            }
+            .content-section, #journeys {
+                padding: 60px 0;
+            }
+            h2 {
+                margin-bottom: 32px;
+            }
+            .journeys-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">Stellar AI</a>
+            <nav class="main-nav">
+                <a href="#features">Features</a>
+                <a href="#journeys">Get Started</a>
+                <a href="#">Docs</a>
+                <a href="#">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <h1 class="fade-in">Transform Your Ideas Into Reality</h1>
+                <p class="fade-in" style="transition-delay: 0.1s;">Our AI-powered platform understands your project requirements, designs the architecture, and writes the code. Go from concept to launch faster than ever.</p>
+                <div class="hero-buttons fade-in" style="transition-delay: 0.2s;">
+                    <a href="#journeys" class="btn btn-primary start-now-btn">Start Now</a>
+                    <a href="#" class="btn btn-secondary">How It Works</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-section">
+            <section id="features" class="container">
+                <h2 class="fade-in">A Smarter Way to Build</h2>
+                <div class="features-grid">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                        </div>
+                        <h3>AI-Powered Scoping</h3>
+                        <p>Describe your project in natural language. Our AI asks clarifying questions to create a detailed project specification automatically.</p>
+                    </div>
+
+                    <div class="feature-card fade-in" style="transition-delay: 0.1s;">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        </div>
+                        <h3>Automated Code Generation</h3>
+                        <p>From frontend components to backend APIs, Stellar AI writes clean, scalable, and production-ready code based on your spec.</p>
+                    </div>
+                    
+                    <div class="feature-card fade-in" style="transition-delay: 0.2s;">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2m4 0h2a2 2 0 002-2V5a2 2 0 00-2-2h-2a2 2 0 00-2 2v1" /></svg>
+                        </div>
+                        <h3>Real-Time Collaboration</h3>
+                        <p>Invite your team to review, comment, and provide feedback directly on the AI-generated architecture and code.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="journeys" class="container">
+                <h2 class="fade-in">Ready to Build Something Amazing?</h2>
+                <div class="journeys-container">
+                    <div class="journey-card fade-in">
+                        <h3>Guided Onboarding</h3>
+                        <p>Perfect for new ideas. Our AI will guide you through a series of questions to capture your vision.</p>
+                        <ul>
+                            <li>Interactive Q&A session with AI</li>
+                            <li>Automated feature list generation</li>
+                            <li>Schedule a discovery call with our experts</li>
+                        </ul>
+                        <a href="#" class="btn btn-journey">Start Guided Session</a>
+                    </div>
+
+                    <div class="journey-card fade-in" style="transition-delay: 0.1s;">
+                        <h3>Self-Serve Specification</h3>
+                        <p>For those who have a clear plan. Upload your existing documents or fill out our detailed form.</p>
+                         <ul>
+                            <li>Upload existing design files or documents</li>
+                            <li>Use our structured spec template</li>
+                            <li>Get an instant project estimate & timeline</li>
+                        </ul>
+                        <a href="#" class="btn btn-journey">Submit My Spec</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="#" title="Twitter">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M23.643 4.937c-.835.37-1.732.62-2.675.733a4.67 4.67 0 0 0 2.048-2.578 9.3 9.3 0 0 1-2.958 1.13a4.66 4.66 0 0 0-7.938 4.25 13.229 13.229 0 0 1-9.602-4.868c-.353.61-.555 1.32-.555 2.064a4.658 4.658 0 0 0 2.072 3.878a4.621 4.621 0 0 1-2.11-.583v.06a4.66 4.66 0 0 0 3.737 4.568a4.692 4.692 0 0 1-2.104.08a4.661 4.661 0 0 0 4.352 3.234a9.348 9.348 0 0 1-5.786 1.995a9.5 9.5 0 0 1-1.112-.065a13.175 13.175 0 0 0 7.14 2.093c8.57 0 13.255-7.098 13.255-13.254c0-.2-.005-.402-.014-.602a9.47 9.47 0 0 0 2.323-2.41z"></path></svg>
+                </a>
+                <a href="#" title="GitHub">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492c.5.092.682-.217.682-.482c0-.237-.009-.868-.014-1.703c-2.782.605-3.369-1.343-3.369-1.343c-.454-1.158-1.11-1.466-1.11-1.466c-.908-.62.069-.608.069-.608c1.003.07 1.531 1.032 1.531 1.032c.892 1.53 2.341 1.088 2.91.832c.092-.647.35-1.088.636-1.338c-2.22-.253-4.555-1.113-4.555-4.951c0-1.093.39-1.988 1.03-2.688c-.103-.253-.446-1.272.098-2.65c0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027c.546 1.379.203 2.398.1 2.65c.64.7 1.028 1.595 1.028 2.688c0 3.848-2.339 4.695-4.566 4.942c.359.309.678.92.678 1.855c0 1.338-.012 2.419-.012 2.747c0 .268.18.58.688.482A10.001 10.001 0 0 0 22 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg>
+                </a>
+                <a href="#" title="LinkedIn">
+                    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                </a>
+            </div>
+            <p>&copy; 2024 Stellar AI, Inc. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll for "Start Now" buttons
+            const startButtons = document.querySelectorAll('.start-now-btn');
+            startButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for fade-in animations
+            const faders = document.querySelectorAll('.fade-in');
+            const appearOptions = {
+                threshold: 0.2, // Trigger when 20% of the element is visible
+                rootMargin: "0px 0px -50px 0px" // Start animation a bit before it's fully in view
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('visible');
+                        appearOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            faders.forEach(fader => {
+                appearOnScroll.observe(fader);
+            });
+        });
+    </script>
+</body>
+</html>
+```
